@@ -1,0 +1,273 @@
+#ACTION {%0 adrenalizes you!}
+{
+    #variable adren 1;
+    emote flexes his enormous muscles.
+}
+
+#ACTION {%0 is lying on the ground stunned!}
+{
+    back $target;
+    kick $target
+}
+
+#ACTION {%0 says 'about to dismantle %1, I'm just sayin'}
+{
+    #variable target %1;
+    say Okay! Just say when..
+}
+
+#ACTION {%0 says 'armor'}
+{
+    cast 'armor' %0
+}
+
+#ACTION {%0 says 'bless'}
+{
+    cast 'bless' %0
+}
+
+#ACTION {%0 says 'fol up'}
+{
+    fol %0
+}
+
+#ACTION {%0 says 'fol'}
+{
+    fol %0
+}
+
+#ACTION {%0 suddenly freezes in place, unable to move!}
+{
+    back $target
+}
+
+#ACTION {%0 tells the group '=%1='}
+{
+    cast '%1' %0
+}
+
+#ACTION {%0 tells the group 'I need a heal'}
+{
+    lay %0
+}
+
+#ACTION {%0 trip through that Astral Plane!}
+{
+    rescue $leader
+}
+
+#ACTION {%0 uses psychic power to scramble %0}
+{
+    assist $leader;
+    bash $target
+}
+
+#ACTION {A pile of gold coins.}
+{
+    take all.gold
+}
+
+#ACTION {Arcs of holy energy spring from the ground and bind themselves about you.}
+{
+    #variable protection 1;
+    gt Holy Nikes!
+}
+
+#ACTION {Evil holds dominion over you again as your warding powers fade.}
+{
+    #variable protection 0;
+    gt Evil is near....;
+    emote feels less protected against evil.;
+    cast 'protection from evil'
+}
+
+#ACTION {Sorry, you can't do that.}
+{
+    gt I can't do that!
+}
+
+#ACTION {You are now a member of %0's group.}
+{
+    #variable leader %0
+}
+
+#ACTION {You are surrounded by a strong force shield.}
+{
+    #variable shield 1;
+    emote conjures an exremely large blue bubble around himself.
+}
+
+#ACTION {You arm is jolted and A black potion flies from your hand, *SMASH*}
+{
+    take black-potion;
+    quaff black-potion
+}
+
+#ACTION {You feel less righteous.}
+{
+    #variable bless 0;
+    cast 'bless' graphix
+}
+
+#ACTION {You feel the blessing of a diety upon you.}
+{
+    #variable armor 1 ;
+    gt I've got some protection!
+}
+
+#ACTION {You feel the power of a diety's blessing shielding you.}
+{
+    #variable sanc 1;
+    gt sanc'd up;
+    emote hums powerfully.
+}
+
+#ACTION {You have been fully healed by Puff!}
+{
+    bs Thank you so much Puff...
+}
+
+#ACTION {You lost your concentration!}
+{
+    cast '$spell' $target
+}
+
+#ACTION {You tell the group 'Sanc is gone'}
+{
+    take black-potion;
+    quaff black-potion
+}
+
+#ACTION {Your adrenalin level returns to normal.}
+{
+    #variable adren 0;
+    gt adren
+}
+
+#ACTION {Your holy protection disappears.}
+{
+    #variable spiritual 0;
+    cast 'spiritual armor'
+}
+
+#ACTION {Your protective magic dissipates.}
+{
+    #variable sanc 0;
+    gt Sanc is gone;
+    emote descalates multiple situations simultaneously.
+}
+
+
+#ALIAS {cast '%0' %1'}
+{
+    #variable spelltarget %1;
+    #variable spell %0;
+    cas '%0' %1
+}
+
+#ALIAS {powerup}
+{
+    gt shield;
+    cast 'armor' graphix;
+    cast 'bless' graphix;
+    shieldblock;
+    cast 'protection from evil';
+    cast 'spiritual armor'
+}
+
+#ALIAS {repairup}
+{
+    remove ring;
+    remove ring;
+    give ring super;
+    wear ring;
+    give ring super;
+    wear ring;
+    remove mane;
+    remove mane;
+    give mane super;
+    wear mane;
+    give mane super;
+    wear mane;
+    remove hauberk;
+    give hauberk super;
+    wear hauberk;
+    remove helm;
+    give helm super;
+    wear helm;
+    remove leg;
+    give leg super;
+    wear leg;
+    remove boots;
+    give boots super;
+    wear boots;
+    remove gloves;
+    give gloves super;
+    wear gloves;
+    remove bracers;
+    give arm super;
+    wear arm;
+    remove shield;
+    give shield super;
+    wear shield;
+    remove suit;
+    give suit super;
+    wear suit;
+    remove girth;
+    give girth super;
+    wear girth;
+    remove bracelet;
+    give bracelet super;
+    wear bracelet;
+    remove key;
+    give key super;
+    wear key
+}
+
+
+#CONFIG {AUTO TAB} {5000}
+#CONFIG {BUFFER SIZE} {10000}
+#CONFIG {CHARSET} {ASCII}
+#CONFIG {COLOR MODE} {256}
+#CONFIG {COLOR PATCH} {OFF}
+#CONFIG {COMMAND COLOR} {\e[0;37m}
+#CONFIG {COMMAND ECHO} {ON}
+#CONFIG {CONNECT RETRY} {0.0}
+#CONFIG {HISTORY SIZE} {1000}
+#CONFIG {LOG MODE} {RAW}
+#CONFIG {MOUSE} {OFF}
+#CONFIG {PACKET PATCH} {0.00}
+#CONFIG {RANDOM SEED} {2444812360}
+#CONFIG {REPEAT CHAR} {!}
+#CONFIG {REPEAT ENTER} {OFF}
+#CONFIG {SCREEN READER} {OFF}
+#CONFIG {SCROLL LOCK} {ON}
+#CONFIG {SPEEDWALK} {OFF}
+#CONFIG {TAB WIDTH} {8}
+#CONFIG {TELNET} {ON}
+#CONFIG {TINTIN CHAR} {#}
+#CONFIG {VERBATIM} {OFF}
+#CONFIG {VERBATIM CHAR} {\}
+#CONFIG {VERBOSE} {OFF}
+#CONFIG {WORDWRAP} {ON}
+
+#PATHDIR {d} {u} {32}
+#PATHDIR {e} {w} {2}
+#PATHDIR {n} {s} {1}
+#PATHDIR {ne} {sw} {3}
+#PATHDIR {nw} {se} {9}
+#PATHDIR {s} {n} {4}
+#PATHDIR {se} {nw} {6}
+#PATHDIR {sw} {ne} {12}
+#PATHDIR {u} {d} {16}
+#PATHDIR {w} {e} {8}
+
+#VARIABLE {adren} {1}
+#VARIABLE {armor} {1 }
+#VARIABLE {leader} {Link}
+#VARIABLE {protection} {1}
+#VARIABLE {sanc} {1}
+#VARIABLE {shield} {1}
+#VARIABLE {spiritual} {0}
+#VARIABLE {target} {youngling}
+
