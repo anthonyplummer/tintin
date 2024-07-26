@@ -1,0 +1,127 @@
+#ACTION {%0 adrenalizes you!}
+{
+    #variable adren 1;
+    say That's the stuff!
+}
+
+#ACTION {%0 deadlocks %1}
+{
+    #variable target %1;
+    gt Roger That, Target = %1;
+    #delay {2} {back $target;circle}
+}
+
+#ACTION {%0 is mortally wounded, and will die soon, if not aided.}
+{
+    back $target
+}
+
+#ACTION {%0 starts following you.}
+{
+    group %0
+}
+
+#ACTION {%0 suddenly freezes in place, unable to move!}
+{
+    back $target;
+    circle;
+    circle;
+    circle
+}
+
+#ACTION {%0 tells the group 'FISH READY! Target = %1'}
+{
+    #variable target %1;
+    Roger that! Target Confirmed! Standing by...
+}
+
+#ACTION {%0 tells the group 'target = %1'}
+{
+    #variable target %1
+}
+
+#ACTION {Graphix says 'target = %0'}
+{
+    #variable target %0
+}
+
+#ACTION {Graphix sends %0 sprawling with a powerful bash.}
+{
+    back $target
+}
+
+#ACTION {Link says 'about to dismantle %0, I'm just sayin'}
+{
+    #variable target %0
+}
+
+#ACTION {Link says 'target = %0'}
+{
+    #variable target %0
+}
+
+#ACTION {You arm is jolted and A black potion flies from your hand, *SMASH*}
+{
+    take black-potion;
+    quaff black-potion
+}
+
+#ACTION {You receive your share of %0 experience.}
+{
+    hide
+}
+
+#ACTION {Your adrenalin level returns to normal.}
+{
+    #variable adren 0;
+    gt my blood pressure is low..
+}
+
+#ACTION {Your protective magic dissipates.}
+{
+    #variable sanc 0;
+    gt need sanc!;
+    quaff black
+}
+
+
+#CONFIG {AUTO TAB} {5000}
+#CONFIG {BUFFER SIZE} {10000}
+#CONFIG {CHARSET} {UTF-8}
+#CONFIG {COLOR MODE} {TRUE}
+#CONFIG {COLOR PATCH} {OFF}
+#CONFIG {COMMAND COLOR} {\e[0;37m}
+#CONFIG {COMMAND ECHO} {ON}
+#CONFIG {CONNECT RETRY} {0.0}
+#CONFIG {HISTORY SIZE} {1000}
+#CONFIG {LOG MODE} {RAW}
+#CONFIG {MOUSE} {OFF}
+#CONFIG {PACKET PATCH} {AUTO OFF}
+#CONFIG {RANDOM SEED} {3435466863}
+#CONFIG {REPEAT CHAR} {!}
+#CONFIG {REPEAT ENTER} {OFF}
+#CONFIG {SCREEN READER} {OFF}
+#CONFIG {SCROLL LOCK} {ON}
+#CONFIG {SPEEDWALK} {ON}
+#CONFIG {TAB WIDTH} {8}
+#CONFIG {TELNET} {ON}
+#CONFIG {TINTIN CHAR} {#}
+#CONFIG {VERBATIM} {OFF}
+#CONFIG {VERBATIM CHAR} {\}
+#CONFIG {VERBOSE} {OFF}
+#CONFIG {WORDWRAP} {ON}
+
+#PATHDIR {d} {u} {32}
+#PATHDIR {e} {w} {2}
+#PATHDIR {n} {s} {1}
+#PATHDIR {ne} {sw} {3}
+#PATHDIR {nw} {se} {9}
+#PATHDIR {s} {n} {4}
+#PATHDIR {se} {nw} {6}
+#PATHDIR {sw} {ne} {12}
+#PATHDIR {u} {d} {16}
+#PATHDIR {w} {e} {8}
+
+#VARIABLE {sanc} {0}
+#VARIABLE {target} {4.3.youngling}
+

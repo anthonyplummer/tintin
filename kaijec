@@ -1,0 +1,213 @@
+#ACTION {##You have found your target!}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        hit $target
+    }
+}
+
+#ACTION {##You see a faint trail to the %0}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        go
+    }
+}
+
+#ACTION {%0 A dagger with a long thin blade is here. %1}
+{
+    get all.dagger
+}
+
+#ACTION {%0 A pile of gold coins.[%1]}
+{
+    get all.coins
+}
+
+#ACTION {%0 You throw a dagger!}
+{
+    #if {$fish == 1 && $turbo == 1}
+    {
+        throw $dagger $target
+    }
+}
+
+#ACTION {%0 and attempts to flee.}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        track $target
+    }
+}
+
+#ACTION {A dagger with a long thin blade is here.}
+{
+    get all.dagger
+}
+
+#ACTION {A pile of gold coins.}
+{
+    take all.gold
+}
+
+#ACTION {The white glow around %0 body fades.}
+{
+    #variable sanc 0;
+    quaff black
+}
+
+#ACTION {Well,%0}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        go
+    }
+}
+
+#ACTION {You arm is jolted and A black potion flies from your hand, *SMASH*}
+{
+    quaff black-potion
+}
+
+#ACTION {You don't have that!}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        track $target
+    }
+}
+
+#ACTION {You receive your share of %0 experience.}
+{
+    #if {$fish == 1 && $turbo == 1}
+    {
+        throw $dagger $target
+    };
+    #elseif {$turbo==1}
+    {
+        hit $target
+    };
+    #else
+    {
+        say We're good here.
+    }
+}
+
+#ACTION {You see traces of your quarry to the %0}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        %0
+    }
+}
+
+#ACTION {Your protective magic dissipates.}
+{
+    #variable sanc 0;
+    quaff black-potion
+}
+
+
+#ALIAS {fish %0}
+{
+    gt FISH READY! Target = %0;
+    #variable fish 1;
+    #variable target %0
+}
+
+#ALIAS {go}
+{
+    #if {$sanc == 0}
+    {
+        take black-potion;
+        quaff black-potion
+    };
+    #if {$fish == 1 && $sanc == 1}
+    {
+        throw $dagger $target
+    };
+    #else
+    {
+        hit $target
+    }
+}
+
+#ALIAS {powerup}
+{
+    cast 'stone';
+    shroud;
+    presence;
+    fury;
+    attack 5;
+    attack 4;
+    attack 3
+}
+
+#ALIAS {target %0}
+{
+    #variable target %0;
+    say about to dismantle %0, I'm just sayin
+}
+
+#ALIAS {turbofishoff}
+{
+    say No Chum, No Tikey!;
+    #variable fish 0;
+    #variable turbo 0;
+    gt Simma down na...
+}
+
+#ALIAS {turbofishon}
+{
+    gt Fish loaded!;
+    #variable fish 1;
+    #variable ss 0;
+    #variable turbo 1;
+    gt Let's Jazz...
+}
+
+
+#CONFIG {AUTO TAB} {5000}
+#CONFIG {BUFFER SIZE} {10000}
+#CONFIG {CHARSET} {UTF-8}
+#CONFIG {COLOR MODE} {TRUE}
+#CONFIG {COLOR PATCH} {OFF}
+#CONFIG {COMMAND COLOR} {\e[0;37m}
+#CONFIG {COMMAND ECHO} {ON}
+#CONFIG {CONNECT RETRY} {0.0}
+#CONFIG {HISTORY SIZE} {1000}
+#CONFIG {LOG MODE} {RAW}
+#CONFIG {MOUSE} {OFF}
+#CONFIG {PACKET PATCH} {AUTO OFF}
+#CONFIG {RANDOM SEED} {3805377957}
+#CONFIG {REPEAT CHAR} {!}
+#CONFIG {REPEAT ENTER} {OFF}
+#CONFIG {SCREEN READER} {OFF}
+#CONFIG {SCROLL LOCK} {ON}
+#CONFIG {SPEEDWALK} {ON}
+#CONFIG {TAB WIDTH} {8}
+#CONFIG {TELNET} {ON}
+#CONFIG {TINTIN CHAR} {#}
+#CONFIG {VERBATIM} {OFF}
+#CONFIG {VERBATIM CHAR} {\}
+#CONFIG {VERBOSE} {OFF}
+#CONFIG {WORDWRAP} {ON}
+
+#PATHDIR {d} {u} {32}
+#PATHDIR {e} {w} {2}
+#PATHDIR {n} {s} {1}
+#PATHDIR {ne} {sw} {3}
+#PATHDIR {nw} {se} {9}
+#PATHDIR {s} {n} {4}
+#PATHDIR {se} {nw} {6}
+#PATHDIR {sw} {ne} {12}
+#PATHDIR {u} {d} {16}
+#PATHDIR {w} {e} {8}
+
+#VARIABLE {dagger} {dagger}
+#VARIABLE {fish} {1}
+#VARIABLE {sanc} {0}
+#VARIABLE {ss} {0}
+#VARIABLE {target} {narnia}
+#VARIABLE {turbo} {1}
+

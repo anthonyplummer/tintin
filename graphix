@@ -18,11 +18,13 @@
 
 #ACTION {%0 says 'armor'}
 {
+    #variable spell armor;
     cast 'armor' %0
 }
 
 #ACTION {%0 says 'bless'}
 {
+    #variable spell bless;
     cast 'bless' %0
 }
 
@@ -36,6 +38,11 @@
     fol %0
 }
 
+#ACTION {%0 starts following you.}
+{
+    group %0
+}
+
 #ACTION {%0 suddenly freezes in place, unable to move!}
 {
     back $target
@@ -43,12 +50,29 @@
 
 #ACTION {%0 tells the group '=%1='}
 {
+    #variable spell %1;
     cast '%1' %0
+}
+
+#ACTION {%0 tells the group 'FISH READY! Target = %1'}
+{
+    #variable target %1
 }
 
 #ACTION {%0 tells the group 'I need a heal'}
 {
+    #variable heal %0;
     lay %0
+}
+
+#ACTION {%0 tells the group 'I'm out of daggers.'}
+{
+    give all.dagger %0
+}
+
+#ACTION {%0 tells the group 'got that metaphysical thing going on'}
+{
+    heal $leader
 }
 
 #ACTION {%0 trip through that Astral Plane!}
@@ -58,8 +82,9 @@
 
 #ACTION {%0 uses psychic power to scramble %0}
 {
+    back $target;
     assist $leader;
-    bash $target
+    bas $target
 }
 
 #ACTION {A pile of gold coins.}
@@ -81,6 +106,11 @@
     cast 'protection from evil'
 }
 
+#ACTION {Maybe you should get on your feet first?}
+{
+    stand
+}
+
 #ACTION {Sorry, you can't do that.}
 {
     gt I can't do that!
@@ -94,7 +124,7 @@
 #ACTION {You are surrounded by a strong force shield.}
 {
     #variable shield 1;
-    emote conjures an exremely large blue bubble around himself.
+    emote conjures an extremely large blue bubble around himself.
 }
 
 #ACTION {You arm is jolted and A black potion flies from your hand, *SMASH*}
@@ -106,12 +136,13 @@
 #ACTION {You feel less righteous.}
 {
     #variable bless 0;
+    #variable spell bless;
     cast 'bless' graphix
 }
 
 #ACTION {You feel the blessing of a diety upon you.}
 {
-    #variable armor 1 ;
+    #variable armor 1;
     gt I've got some protection!
 }
 
@@ -132,6 +163,11 @@
     cast '$spell' $target
 }
 
+#ACTION {You never did get First Aid Merit Badge did you?}
+{
+    lay $heal
+}
+
 #ACTION {You tell the group 'Sanc is gone'}
 {
     take black-potion;
@@ -147,6 +183,7 @@
 #ACTION {Your holy protection disappears.}
 {
     #variable spiritual 0;
+    #variable spell spiritual;
     cast 'spiritual armor'
 }
 
@@ -158,6 +195,12 @@
 }
 
 
+#ALIAS {bash}
+{
+    say target = %0;
+    bas %0
+}
+
 #ALIAS {cast '%0' %1'}
 {
     #variable spelltarget %1;
@@ -167,7 +210,7 @@
 
 #ALIAS {powerup}
 {
-    gt shield;
+    gt =shield=;
     cast 'armor' graphix;
     cast 'bless' graphix;
     shieldblock;
@@ -242,7 +285,7 @@
 #CONFIG {REPEAT ENTER} {OFF}
 #CONFIG {SCREEN READER} {OFF}
 #CONFIG {SCROLL LOCK} {ON}
-#CONFIG {SPEEDWALK} {OFF}
+#CONFIG {SPEEDWALK} {ON}
 #CONFIG {TAB WIDTH} {8}
 #CONFIG {TELNET} {ON}
 #CONFIG {TINTIN CHAR} {#}
@@ -263,11 +306,14 @@
 #PATHDIR {w} {e} {8}
 
 #VARIABLE {adren} {1}
-#VARIABLE {armor} {1 }
+#VARIABLE {armor} {1}
+#VARIABLE {bless} {0}
+#VARIABLE {heal} {Link}
 #VARIABLE {leader} {Link}
 #VARIABLE {protection} {1}
 #VARIABLE {sanc} {1}
 #VARIABLE {shield} {1}
+#VARIABLE {spell} {armor}
 #VARIABLE {spiritual} {0}
-#VARIABLE {target} {youngling}
+#VARIABLE {target} {narnia}
 

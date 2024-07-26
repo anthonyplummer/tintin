@@ -1,11 +1,112 @@
+#ACTION {##You have found your target!}
+{
+    #variable tracking 0;
+    #if {$turbo == 1 && $fish == 1}
+    {
+        blast $target
+    }
+}
+
+#ACTION {##You see a faint trail to the %0}
+{
+    #if {$tracking == 0}
+    {
+        go
+    };
+    #if {$turbo && $tracking == 1}
+    {
+        #variable tracking 0;
+        %0
+    }
+}
+
+#ACTION {%0 A dagger with a long thin blade is here. %1}
+{
+    get all.dagger
+}
+
 #ACTION {%0 A pile of gold coins.[%1]}
 {
     get all.coins
 }
 
+#ACTION {%0 and attempts to flee.}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        #variable tracking 1;
+        go
+    }
+}
+
+#ACTION {%0 falls to the ground.}
+{
+    #if {$turbo == 1 && $fishTank == 1}
+    {
+        order soul get $dagger;
+        order soul throw $dagger $target
+    };
+    #else
+    {
+        get $dagger
+    }
+}
+
+#ACTION {%0 flying into the wall!}
+{
+    blast $target
+}
+
+#ACTION {%0 has arrived from the %1}
+{
+    #if {$fishTank == 1}
+    {
+        blast $target
+    }
+}
+
+#ACTION {%0 lays hands on you.}
+{
+    #if {$hp < 3000}
+    {
+        gt I need a heal
+    };
+    #else
+    {
+        go
+    }
+}
+
+#ACTION {%0 leaves %1.}
+{
+    #if {$fighting == 1}
+    {
+        go
+    }
+}
+
+#ACTION {%0 says 'I don't wanna be your beast of burden!'}
+{
+    go
+}
+
+#ACTION {%0 sees %1, and attacks!}
+{
+    blast $target
+}
+
 #ACTION {%0 starts following you.}
 {
     group %0
+}
+
+#ACTION {%0 stops following you.}
+{
+    gt We have fallen.;
+    #if {$fish == 1 && $fishTank == 1}
+    {
+        phant soul
+    }
 }
 
 #ACTION {%0 tells the group '=%1='}
@@ -18,9 +119,106 @@
     adren %0
 }
 
+#ACTION {%0 tells the group 'my blood pressure is low..'}
+{
+    adren %0
+}
+
+#ACTION {%0 throws a dagger!}
+{
+    #if {$fishTank == 1 && $turbo == 1 && $fish == 1}
+    {
+        order soul throw $dagger $target
+    };
+    #if {$fishTank == 0 && $turbo == 1 && $fish == 1}
+    {
+        throw $dagger $target
+    }
+}
+
+#ACTION {%0The Rock Troll is here hunched over and snorting at you.}
+{
+    #if {$turbo == 1}
+    {
+        #variable target purple;
+        wune3nw2d;
+        look purple;
+        cast 'paralyze' purple;
+        back purple;
+        blast purple
+    }
+}
+
+#ACTION {%0The fallen knight, Mordred stands here.}
+{
+    #variable target Mordred;
+    blast Mordred
+}
+
+#ACTION {A dagger with a long thin blade is here.}
+{
+    get all.dagger
+}
+
+#ACTION {A might warrior stands here.}
+{
+    #if {$turbo = 1}
+    {
+        say Not from 63rd!;
+        #variable target achilles;
+        look $target;
+        p achilles;
+        back achilles;
+        blast achilles
+    }
+}
+
+#ACTION {A mighty warrior stands here.}
+{
+    #if { $turbo == 1 }
+    {
+        say Not from 63rd!;
+        #variable target achilles;
+        psych $target;
+        look $target;
+        p achilles;
+        back achilles;
+        blast achilles
+    };
+    #else
+    {
+        high achilles
+    }
+}
+
+#ACTION {A most unscrupulous knight stands before you plotting to rob you blind.}
+{
+    #variable target Garlon;
+    blast Garlon
+}
+
 #ACTION {A pile of gold coins.}
 {
     take all.gold
+}
+
+#ACTION {Achilles is dead! R.I.P.}
+{
+    #if {"$target" == "achilles" }
+    {
+        #variable target rock-troll;
+        gt Achilles is dead, next-stop : rock-troll;
+        #if {$turbo == 1}
+        {
+            portal rock-troll
+        }
+    }
+}
+
+#ACTION {As your concentration falters, your metaphasic shield wavers and vanishes.}
+{
+    gt annnnnnndddddddd..... halt!;
+    turbossoff
 }
 
 #ACTION {Eddy tells you 'Wonderful! 25380 coins, and thank you very much!'}
@@ -28,14 +226,36 @@
     buy 9*black
 }
 
+#ACTION {Guinevere is dead! R.I.P.}
+{
+    #variable target Arthur;
+    blast Arthur
+}
+
 #ACTION {H:%0 M:%1 V:%2 >}
 {
     #variable hp %0;
     #variable mana %1;
     #variable move %2;
-    #if {$hp<= 3000}
+    #if {$hp < 3000 && $turbo == 1}
     {
-        #delay {5} {gt I need a heal}
+        #variable turbo 0;
+        #variable ss 0
+    };
+    #if {$hp > 3000 && $mana > 3000}
+    {
+        #variable health 1
+    };
+    #if {$mana < 500 && $turbo == 1}
+    {
+        turbossoff
+    };
+    #if {$hp < 2000 && $mana < 1000 && $turbo == 1}
+    {
+        gt We need to go dip...;
+        #variable turbo 0;
+        #variable health 0;
+        #variable ss 0
     }
 }
 
@@ -44,10 +264,178 @@
     go
 }
 
+#ACTION {King Arthur is dead! R.I.P.}
+{
+    5s;
+    #variable target Launcelot;
+    blast Launcelot
+}
+
+#ACTION {Lamorak, the champion is always prepared for a fight.}
+{
+    #variable target Lamorak;
+    blast Lamorak
+}
+
+#ACTION {Mordred is dead! R.I.P.}
+{
+    2w
+}
+
+#ACTION {No way! You are fighting for your life!}
+{
+    blast
+}
+
+#ACTION {Sir Bernlad stands before you clad entirely in green armor.}
+{
+    #variable target Bernlad;
+    blast Bernlad
+}
+
+#ACTION {Sir Bevedere is dead! R.I.P.}
+{
+    2s
+}
+
+#ACTION {Sir Galahad is dead! R.I.P.}
+{
+    2n
+}
+
+#ACTION {Sir Gareth of Orkney is dead! R.I.P.}
+{
+    2e
+}
+
+#ACTION {Sir Garlon is dead! R.I.P.}
+{
+    2s
+}
+
+#ACTION {Sir Gawain is dead! R.I.P.}
+{
+    2n
+}
+
+#ACTION {Sir Gawain lives here in the lap of luxury.}
+{
+    #variable target Gawain;
+    blast Gawain
+}
+
+#ACTION {Sir Kay is dead! R.I.P.}
+{
+    2s
+}
+
+#ACTION {Sir Kay stands before you laughing and being the loud mouth that he is.}
+{
+    #variable target Kay;
+    blast Kay
+}
+
+#ACTION {Sir Lamorak is dead! R.I.P.}
+{
+    2w
+}
+
+#ACTION {Sir Palomides the Saracen is dead! R.I.P.}
+{
+    w;
+    open throne;
+    2n
+}
+
+#ACTION {Sir Palomides waves his scimitar in a threatening manner.}
+{
+    #variable target Palomides;
+    blast Palomides
+}
+
+#ACTION {Sir Percivale is dead! R.I.P.}
+{
+    2e
+}
+
+#ACTION {Sir Percivale tries to not look foolish, but always fails.}
+{
+    #variable target Percivale;
+    blast Percivale
+}
+
+#ACTION {Sir Tristram of Lyoness is dead! R.I.P.}
+{
+    2e
+}
+
+#ACTION {Sir Tristram searches anxiously for his beloved Isolde.}
+{
+    #variable target Tristram;
+    blast Tristram
+}
+
+#ACTION {The Green Knight is dead! R.I.P.}
+{
+    2n
+}
+
+#ACTION {The Purple Spotted Snorklewacker is dead! R.I.P.}
+{
+    #if {$turbo == 1}
+    {
+        take all dust;
+        #variable target filthy;
+        turbossoff;
+        portal filthy
+    }
+}
+
+#ACTION {The beautiful and graceful queen, Guinevere, shines with tempting beauty.}
+{
+    #variable target Guinevere;
+    blast Guinevere
+}
+
+#ACTION {The cleanest, most noble man you have ever seen stands here on guard.}
+{
+    #variable target Galahad;
+    blast Galahad
+}
+
+#ACTION {The one armed Bevedere stands prepared to put his spear in your back.}
+{
+    #variable target Bevedere;
+    blast Bevedere
+}
+
 #ACTION {The white glow around %0 body fades.}
 {
     #variable spiritual 0;
     cast 'spiritual armor'
+}
+
+#ACTION {Top of the Stairs}
+{
+    #variable sshome 1
+}
+
+#ACTION {Well,%0}
+{
+    #if {$turbo == 1 && $fish == 1}
+    {
+        go
+    }
+}
+
+#ACTION {With a kind word and gentle smile, Gareth easily wins your heart.}
+{
+    bow gareth;
+    say Puerta la pistola!;
+    say Preguntale Gareth!!!;
+    say Te quires morir?!;
+    #variable target Gareth;
+    blast Gareth
 }
 
 #ACTION {You are rescued by Graphix, you are confused!}
@@ -61,6 +449,80 @@
     emote conjures a giant blue bubble around him.
 }
 
+#ACTION {You are unable to find traces of one.}
+{
+    gt Ya done now...
+}
+
+#ACTION {You attempt to summon a Phantasmal Killer but you fail.}
+{
+    #if {$fishTank == 1}
+    {
+        phant soul
+    }
+}
+
+#ACTION {You can't sense that person anywhere.}
+{
+    #if {$targetCount >= 2}
+    {
+        #variable targetCount 0;
+        ss $target
+    };
+    gt All targets neutralized, moving..;
+    #if {$ss == 1 && $turbo == 1}
+    {
+        #if {"$target" == "grounds-guard"}
+        {
+            #variable target youngling;
+            ss youngling
+        };
+        #elseif {"$target" == "youngling"}
+        {
+            #variable target gorn;
+            ss gorn
+        };
+        #elseif {"$target" == "gorn"}
+        {
+            #variable target djinn;
+            ss djinn
+        };
+        #elseif {"$target" == "djinn"}
+        {
+            gt DONE s/S!
+        }
+    }
+}
+
+#ACTION {You don't have that!}
+{
+    #if {$tracking == 0}
+    {
+        #variable tracking 1;
+        throw $dagger $target
+    };
+    #else
+    {
+        gt I'm out of daggers.;
+        #variable tracking 1;
+        track $target
+    }
+}
+
+#ACTION {You don't see anybody around meeting that description.}
+{
+    #if {$turbo == 1 && $tracking == 1 && $fish == 1}
+    {
+        gt On The Move...;
+        track $target
+    };
+    #else
+    {
+        #variable tracking 1;
+        track $target
+    }
+}
+
 #ACTION {You erect a metaphasic shield.}
 {
     #variable meta 1;
@@ -70,8 +532,7 @@
 
 #ACTION {You erect a transparent anti-magic sphere about yourself.}
 {
-    #variable spellshield 0;
-    shield
+    #variable spellshield 1
 }
 
 #ACTION {You experience a mental letdown as your blast fizzles.}
@@ -82,6 +543,18 @@
 #ACTION {You failed to erect a spell barrier!}
 {
     shield
+}
+
+#ACTION {You feel less protected.}
+{
+    #variable armor 0;
+    gt =armor=
+}
+
+#ACTION {You feel less righteous.}
+{
+    #variable bless 0;
+    gt =bless=
 }
 
 #ACTION {You feel someone protecting you.}
@@ -121,20 +594,66 @@
     cast '$spell' $target
 }
 
+#ACTION {You open a portal and bring forth your target!}
+{
+    #if {$turbo == 1}
+    {
+        #variable ss 1
+    };
+    #else
+    {
+        #variable ss 0
+    }
+}
+
 #ACTION {You receive your share of %0 experience.}
 {
+    #if {$targetCount < 1}
+    {
+        #variable targetCount 1
+    };
+    #variable fighting 0;
     #if {$turbo==1 && $ss==1}
     {
-        summon $target;
-        blast $target
+        #if {$targetCount > 1}
+        {
+            #math {targetCount} {$targetCount + 1};
+            ss $targetCount.$target;
+            gt Testing target = $target;
+            target $target
+        };
+        #else
+        {
+            #math {targetCount} {$targetCount - 1};
+            ss $target
+        }
     };
-    #elseif {$turbo==1}
+    #if {$fish == 1 && $fishTank == 0 && $turbo == 1}
+    {
+        throw $dagger $target
+    };
+    #if {$fishTank == 1}
+    {
+        order soul get all.dagger;
+        order soul throw $dagger $target
+    };
+    #elseif {$turbo == 1}
     {
         blast $target
     };
     #else
     {
+        #variable tracking 0;
+        #variable targetCount 1;
         say We're good here.
+    }
+}
+
+#ACTION {You see traces of your quarry to the %0}
+{
+    #if {$tracking == 1 && $turbo == 1}
+    {
+        %0
     }
 }
 
@@ -145,40 +664,138 @@
 
 #ACTION {You send %0 flying out of the room!}
 {
-    summon $target;
-    blast $target
+    #variable tracking 1;
+    go
+}
+
+#ACTION {You send A Giant Ogre flying out of the room!}
+{
+    #variable fish 1
 }
 
 #ACTION {You sense the red in your vision disappear.}
 {
-    aura
+    aura;
+    #if {$turbo == 1}
+    {
+        go
+    }
 }
 
 #ACTION {You succede in enhancing your vision.}
 {
     #variable great 1;
     gt I can see everything!;
-    emote eyes glows with a brilliant white hue.
+    emote eyes glows with a brilliant white hue.;
+    #if {$turbo == 1}
+    {
+        go
+    }
 }
 
 #ACTION {You summon a flaming aura to deter attackers.}
 {
     #variable fireshield 1;
     gt Flame on!;
-    emote erupts in violent flames hotter than the sun.
+    emote erupts in violent flames hotter than the sun.;
+    #if {$turbo == 1}
+    {
+        go
+    }
+}
+
+#ACTION {You've summoned The soul shadow from the recesses of your mind!}
+{
+    group soul;
+    order soul guard on;
+    order soul take all.dagger dust;
+    give all.dagger soul
 }
 
 #ACTION {Your anti-magic sphere flickers into a thousand specks of light, and vanishes.}
 {
     #variable spellshield 0;
-    shield
+    shield;
+    #if {$turbo == 1}
+    {
+        go
+    }
+}
+
+#ACTION {Your clarity of vision dissapears}
+{
+    #variable great 0;
+    gt My sight lack vision..;
+    great
+}
+
+#ACTION {Your metaphasic shield collapses.}
+{
+    gt my shields are down;
+    turbossoff;
+    turbofishoff;
+    #variable meta 0
+}
+
+#ACTION {Your mind is not up to the challenge at the moment.}
+{
+    #if {$ss == 1 && $turbo == 1}
+    {
+        #variable turbo 0;
+        gt Turn down for what!;
+        #if {$mana < 300 && $hp > 5000}
+        {
+            #variable ss 0;
+            gt Go Forth! and know me betta mon!;
+            canibalize 2500
+        }
+    }
+}
+
+#ACTION {Your mind is not yet strong enough to summon this individual.}
+{
+    gt Target = $target;
+    #if {$targetCount < 2}
+    {
+        #math {targetCount} {1 + $targetCount}
+    };
+    #else
+    {
+        #variable targetCount 1
+    };
+    gt Updated Target = $targetCount.$target;
+    go
 }
 
 #ACTION {Your protective magic dissipates.}
 {
-    #variable sanc 0
+    #variable sanc 0;
+    gt SANC's OUT!;
+    #if {$meta == 1}
+    {
+        take black-potion;
+        quaff black-potion
+    }
 }
 
+#ACTION {Your shield of protection flickers, then disappears.}
+{
+    #variable shield 0;
+    cast 'shield' link
+}
+
+
+#ALIAS {blast %0}
+{
+    #variable target %0;
+    #variable fighting 1;
+    blas %0
+}
+
+#ALIAS {camelot-raid}
+{
+    10n2e14n2w7n2e2n2w
+}
 
 #ALIAS {cast '%0' %1'}
 {
@@ -187,42 +804,70 @@
     cas '%0' %1
 }
 
+#ALIAS {fish %0}
+{
+    gt FISH READY! Target = %0;
+    #variable fish 1;
+    #variable target %0
+}
+
 #ALIAS {go}
 {
     #if {$adren == 0}
     {
         adren link
     };
-    #else
+    #elseif {$shield == 0}
     {
-        #if {$shield == 0}
+        cast 'shield' link
+    };
+    #elseif {$sanc == 0}
+    {
+        take black-potion;
+        quaff black-potion
+    };
+    #elseif {$ss == 1}
+    {
+        #if {$targetNumber > 1}
         {
-            cast 'shield' link
+            ss $targetNumber.$target
         };
         #else
         {
-            #if {$sanc == 0}
-            {
-                take black-potion;
-                quaff black-potion
-            };
-            #else
-            {
-                #if {$ss == 1}
-                {
-                    summon $target
-                };
-                #elseif {$ss == 0 && $sanc == 1}
-                {
-                    blast $target
-                };
-                #else
-                {
-                    quaff black-potion
-                }
-            };
-            blast $target
+            ss $target
         }
+    };
+    #elseif {$tracking == 1 && $turbo == 1}
+    {
+        track $target
+    };
+    #elseif {$fish == 1 && $sanc == 1}
+    {
+        #if {$fishTank == 1 && $turbo == 1}
+        {
+            order soul throw $dagger $target
+        };
+        #if {$fishTank == 0 && $turbo == 1}
+        {
+            throw $dagger $target
+        };
+        #else
+        {
+            #variable tracking 0;
+            gt ALL OF THEM ARE DEAD!
+        }
+    };
+    #elseif {$ss == 0 && $sanc == 1}
+    {
+        blast $target
+    };
+    #elseif {$fighting == 1}
+    {
+        gt In the miXXX...
+    };
+    #else
+    {
+        say nothing to do.
     }
 }
 
@@ -304,18 +949,78 @@
     wear bracelet
 }
 
+#ALIAS {run troy}
+{
+    #variable ss 0;
+    #variable target achilles;
+    #variable turbo 1;
+    portal $target
+}
+
 #ALIAS {ss %0}
 {
-    #variable target %0;
-    #variable ss 1;
-    target %0;
-    go
+    #if {$sshome == 1}
+    {
+        #if {$targetCount >= 2}
+        {
+            target $target;
+            summon $targetCount.$target;
+            #if {"$target" == "youngling" || "$target" == "grounds-guard"}
+            {
+                gt target = $target;
+                #variable fighting 1;
+                back $target;
+                cast 'paralyze' $target;
+                blast $target
+            }
+        };
+        #elseif {$targetCount == 1 || $targetCount == 0}
+        {
+            target %0;
+            gt target = $target;
+            #variable fighting 1;
+            summon $target;
+            back $target;
+            blast $target
+        };
+        #else
+        {
+            gt Targeting system is down.
+        }
+    };
+    #else
+    {
+        gt We need to get to a designated s/s zone.
+    }
 }
 
 #ALIAS {target %0}
 {
     #variable target %0;
     say about to dismantle %0, I'm just sayin
+}
+
+#ALIAS {true}
+{
+    cast 'true' %0
+}
+
+#ALIAS {turbofishoff}
+{
+    say No Chum, No Dinner!;
+    #variable fish 0;
+    #variable fishTank 0;
+    #variable turbo 0
+}
+
+#ALIAS {turbofishon}
+{
+    gt Fish loaded!;
+    #variable fish 1;
+    #variable ss 0;
+    #variable turbo 1;
+    gt We Lit!;
+    gt Target = $target
 }
 
 #ALIAS {turbossoff}
@@ -329,6 +1034,7 @@
 {
     #variable turbo 1;
     #variable ss 1;
+    #variable fish 0;
     emote gets a fiery looks in his eyes.
 }
 
@@ -350,7 +1056,7 @@
 #CONFIG {REPEAT ENTER} {OFF}
 #CONFIG {SCREEN READER} {OFF}
 #CONFIG {SCROLL LOCK} {ON}
-#CONFIG {SPEEDWALK} {OFF}
+#CONFIG {SPEEDWALK} {ON}
 #CONFIG {TAB WIDTH} {8}
 #CONFIG {TELNET} {ON}
 #CONFIG {TINTIN CHAR} {#}
@@ -372,18 +1078,28 @@
 
 #VARIABLE {adren} {1}
 #VARIABLE {armor} {1}
-#VARIABLE {bless} {1}
+#VARIABLE {bless} {0}
+#VARIABLE {dagger} {dagger}
+#VARIABLE {daggerCount} {1}
+#VARIABLE {fighting} {1}
 #VARIABLE {fireshield} {1}
+#VARIABLE {fish} {0}
+#VARIABLE {fishTank} {0}
+#VARIABLE {fishTankDaggerCount} {0}
 #VARIABLE {great} {1}
-#VARIABLE {hp} {5907}
-#VARIABLE {mana} {2149}
+#VARIABLE {health} {1}
+#VARIABLE {hp} {7005}
+#VARIABLE {mana} {4761}
 #VARIABLE {meta} {1}
-#VARIABLE {move} {4092}
-#VARIABLE {sanc} {0}
+#VARIABLE {move} {4266}
+#VARIABLE {sanc} {1}
 #VARIABLE {shield} {1}
-#VARIABLE {spellshield} {0}
+#VARIABLE {spellshield} {1}
 #VARIABLE {spiritual} {0}
-#VARIABLE {ss} {0}
+#VARIABLE {ss} {1}
+#VARIABLE {sshome} {1}
 #VARIABLE {target} {youngling}
-#VARIABLE {turbo} {0}
+#VARIABLE {targetCount} {3}
+#VARIABLE {tracking} {0}
+#VARIABLE {turbo} {1}
 
