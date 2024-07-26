@@ -1,0 +1,179 @@
+#ALIAS {camelot-raid}
+{
+    10n2e14n2w7n2e2n2w
+}
+
+#ACTION {Sir Lamorak is dead! R.I.P.}
+{
+    2w
+}
+
+#ACTION {Sir Garlon is dead! R.I.P.}
+{
+    2s
+}
+
+#ACTION {Sir Bevedere is dead! R.I.P.}
+{
+    2s
+}
+
+#ACTION {Sir Kay is dead! R.I.P.}
+{
+    2s
+}
+
+#ACTION {Sir Gareth of Orkney is dead! R.I.P.}
+{
+    2e
+}
+
+#ACTION {Sir Tristram of Lyoness is dead! R.I.P.}
+{
+    2e
+}
+
+#ACTION {Sir Percivale is dead! R.I.P.}
+{
+    2e
+}
+
+#ACTION {Sir Tristram of Lyoness is dead! R.I.P.}
+{
+    2e
+}
+
+#ACTION {The Green Knight is dead! R.I.P.}
+{
+    2n
+}
+
+#ACTION {Sir Gawain is dead! R.I.P.}
+{
+    2n
+}
+
+#ACTION {Sir Galahad is dead! R.I.P.}
+{
+    2n
+}
+
+#ACTION {Mordred is dead! R.I.P.}
+{
+    2w
+}
+
+#ACTION {Sir Palomides the Saracen is dead! R.I.P.}
+{
+    w;
+    open throne;
+    2n
+}
+
+#ACTION {Guinevere is dead! R.I.P.}
+{
+    #var target Arthur;
+    blast Arthur
+}
+
+#ACTION {King Arthur is dead! R.I.P.}
+{
+   5s;
+   #var target Launcelot;
+   blast Launcelot
+}
+
+#ACTION {You send %0 flying into the wall!}
+{
+    blast $target
+}
+
+#ACTION {Lamorak, the champion is always prepared for a fight.}
+{
+    #var target Lamorak;
+    blast Lamorak
+}
+
+#ACTION {A most unscrupulous knight stands before you plotting to rob you blind.}
+{
+    #var target Garlon;
+    blast Garlon
+}
+
+#ACTION {The one armed Bevedere stands prepared to put his spear in your back.}
+{
+    #var target Bevedere;
+    blast Bevedere
+}
+
+#ACTION {Sir Kay stands before you laughing and being the loud mouth that he is.}
+{
+    #var target Kay;
+    blast Kay
+}
+
+#ACTION {With a kind word and gentle smile, Gareth easily wins your heart.}
+{
+    bow gareth;
+    say Puerta la pistola!;
+    say Preguntale Gareth!!!;
+    say Te quires morir?!;
+    #var target Gareth;
+    blast Gareth
+}
+
+#ACTION {Sir Tristram searches anxiously for his beloved Isolde.}
+{
+    #var target Tristram;
+    blast Tristram
+}
+
+#ACTION {Sir Percivale tries to not look foolish, but always fails.}
+{
+    #var target Percivale;
+    blast Percivale
+}
+
+#ACTION {Sir Bernlad stands before you clad entirely in green armor.}
+{
+    #var target Bernlad;
+    blast Bernlad
+}
+
+#ACTION {Sir Gawain lives here in the lap of luxury.}
+{
+    #var target Gawain;
+    blast Gawain
+}
+
+#ACTION {The cleanest, most noble man you have ever seen stands here on guard.}
+{
+    #var target Galahad;
+    blast Galahad
+}
+
+#ACTION {%0The fallen knight, Mordred stands here.}
+{
+    #var target Mordred;
+    blast Mordred
+}
+
+#ACTION {Sir Palomides waves his scimitar in a threatening manner.}
+{
+    #var target Palomides;
+    blast Palomides
+}
+
+#ACTION {The beautiful and graceful queen, Guinevere, shines with tempting beauty.}
+{
+    #var target Guinevere;
+    blast Guinevere
+}
+
+
+
+
+
+
+
+

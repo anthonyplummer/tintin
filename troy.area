@@ -1,0 +1,61 @@
+#ACTION {A mighty warrior stands here.}
+{
+    #if { $turbo == 0 }
+    {
+        say Not from 63rd!;
+        #variable target achilles;
+        psych $target;
+        look $target;
+        p achilles;
+        back achilles;
+        blast achilles
+    };
+    #else
+    {
+        high achilles
+    }
+}
+
+#ACTION {Achilles is dead! R.I.P.}
+{
+    #if {"$target" == "achilles" }
+    {
+        #var target rock-troll;
+        gt Achilles is dead, next-stop : rock-troll;
+        #if {$turbo == 0}
+        {
+            portal rock-troll
+        }
+    }
+}
+
+#ACTION {The Purple Spotted Snorklewacker is dead! R.I.P.}
+{
+    #if {$turbo == 0}
+    {
+        take all dust;
+        #variable target filthy;
+        turbossoff;
+        portal filthy
+    }
+}
+
+#ACTION {%0The Rock Troll is here hunched over and snorting at you.}
+{
+    #if {$turbo == 0}
+    {
+        #variable target purple;
+        wune3nw2d;
+        look purple;
+        cast 'paralyze' purple;
+        back purple;
+        blast purple
+    }
+}
+
+#alias {run troy}
+{
+    #variable target achilles;
+    #variable turbo 0;
+    portal $target
+}
